@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de configuração de ambiente
+.env
+*.env
+
+# Pasta de dependências do Python, se estiver no projeto (exemplo: venv)
+venv/
+env/
+ENV/
+.env/
+
+# Diretórios de migrações, normalmente não se ignora as migrações, mas se quiser ignorar:
+# **/migrations/
+
+# Arquivos de logs
+*.log
+
+# Arquivos do sistema (MacOS)
+.DS_Store
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Arquivos de build
+*.egg-info/
+dist/
+build/
