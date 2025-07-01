@@ -25,13 +25,10 @@ Jogo de RPG com foco em duas funcionalidades principais:
 ### Kailane Sarah – Responsável principal por **Subida de Nível** e **Ganho de XP**
 
 - Escrever 3 histórias BDD no arquivo `subida_de_nivel.feature`
-- Escrever 3 histórias BDD no arquivo `ganho_de_xp.feature`
-- Criar o código da funcionalidade de subida de nível (`src/nivel.py`)
-- Implementar os step definitions em `steps/subida_nivel_steps.py`
+- Escrever 2 histórias BDD no arquivo `ganho_de_xp.feature`
+- Criar o código das funcionalidades dos steps (`src/personagens.py`)
 - Gerar e rodar testes automáticos para validar a evolução de nível
 - Tirar prints dos testes funcionando para o PDF final
-- Criar a seção **Subida de Nível** no PDF, incluindo histórias, código e resultados
-
 ---
 
 ### 🤝 Tarefas colaborativas (ambos juntos)
