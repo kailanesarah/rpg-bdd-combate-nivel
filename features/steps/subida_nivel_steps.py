@@ -1,39 +1,22 @@
 from behave import given, when, then
+from src.personagens import PersonagemManager
 
-# Dados dos níveis e XP
-niveis_data = [
-    {"nivel": 1, "xp": 0},
-    {"nivel": 2, "xp": 10},
-    {"nivel": 3, "xp": 100},
-    {"nivel": 4, "xp": 200},
-    {"nivel": 5, "xp": 300},
-    {"nivel": 6, "xp": 500},
-]
+manager = PersonagemManager()
 
-# Função auxiliar para pegar o XP necessário para determinado nível
-def pegar_xp_nivel(nivel_personagem):
-    for nivel_info in niveis_data:
-        if nivel_info['nivel'] == nivel_personagem:
-            return nivel_info['xp']
-    return None
 
-# Função auxiliar para inicializar o contexto
 def inicializa_contexto(context):
-    if not hasattr(context, 'xp_por_nivel'):
-        context.xp_por_nivel = {item['nivel']: item['xp']
-                                for item in niveis_data}
     if not hasattr(context, 'personagens'):
         context.personagens = {}
+    if not hasattr(context, 'xp_por_nivel'):
+        context.xp_por_nivel = {
+            nivel['nivel']: nivel['xp'] for nivel in manager.niveis_data
+        }
 
 
 @given('que o personagem "{nome}" está no nível {nivel:d}')
 def step_cria_personagem(context, nome, nivel):
     inicializa_contexto(context)
-    context.personagens[nome] = {
-        'nome': nome,
-        'nivel': nivel,
-        'xp_acumulado': 0
-    }
+    context.personagens[nome] = manager.criar_personagem(nome, nivel)
 
 
 @given('o personagem "{nome}" possui {xp:d} de XP acumulado')
@@ -47,7 +30,7 @@ def step_define_xp(context, nome, xp):
 @given('o nível {nivel:d} requer {xp_requerido:d} de XP acumulado')
 def step_define_requisito_xp(context, nivel, xp_requerido):
     inicializa_contexto(context)
-    xp_do_modelo = pegar_xp_nivel(nivel)
+    xp_do_modelo = manager.pegar_xp_nivel(nivel)
     assert xp_do_modelo == xp_requerido, (
         f"Para o nível {nivel}, o XP esperado era {xp_requerido}, "
         f"mas o modelo tem {xp_do_modelo} de XP."
@@ -59,17 +42,7 @@ def step_define_requisito_xp(context, nivel, xp_requerido):
 def step_tenta_subir_de_nivel(context, nome):
     inicializa_contexto(context)
     personagem = context.personagens[nome]
-    xp_acumulado = personagem['xp_acumulado']
-    nivel_atual = personagem['nivel']
-
-    sorteia_nivel = sorted(context.xp_por_nivel.items())
-
-    novo_nivel = nivel_atual
-    for nivel, xp_necessario in sorteia_nivel:
-        if xp_acumulado >= xp_necessario and nivel > novo_nivel:
-            novo_nivel = nivel
-
-    personagem['nivel'] = novo_nivel
+    manager.tentar_subir_de_nivel(personagem, context.xp_por_nivel)
 
 
 @then('o personagem "{nome}" deve estar no nível {nivel_esperado:d}')
