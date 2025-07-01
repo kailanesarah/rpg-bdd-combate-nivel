@@ -29,8 +29,8 @@ Feature: Ganhar experiência (XP)
         Then ele deve ter 51 de XP
 
     Scenario: Personagem elimina o chefe dos bandidos
-        Given que o personagem "Diego" está no Nível 5
-        And "Diego" possui 180 de XP acumulado
+        Given que o personagem "Alex" está no Nível 4
+        And "Alex" possui 180 de XP acumulado
         And a missão "Elimine o chefe dos bandidos" garante 18 de XP
-        When personagem "Diego" completa a missão "Elimine o chefe dos bandidos"
+        When personagem "Alex" completa a missão "Elimine o chefe dos bandidos"
         Then ele deve ter 198 de XP
